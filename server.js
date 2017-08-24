@@ -59,7 +59,7 @@ app.post('/service/obtenerCodigosSMSyVoz', function (req, res) {
             'content-type': 'application/x-www-form-urlencoded'
         },
         url: "http://10.51.145.97:8080/Kloud/webresources/monitor",
-        body: "pa_FchInicio=" + datos.pa_FchInicio + "&pa_FchFin=" + datos.pa_FchFin + "&destinatario=" + datos.destinatario
+        body: "fchInicio=" + datos.pa_FchInicio + "&fchFin=" + datos.pa_FchFin + "&filtro=numero" + "&valorFiltro="+datos.destinatario+"&pagina=1"
     }, function (error, response, body) {
         console.log("body response monitor SMS");
 
@@ -67,6 +67,7 @@ app.post('/service/obtenerCodigosSMSyVoz', function (req, res) {
         var respuesta = []
         try {
             respuesta = JSON.parse(body);
+           // console.log(respuesta);
         } catch (e) {
             console.log(e);
         }
@@ -92,15 +93,16 @@ app.post('/service/obtenerCodigosSMSyVoz', function (req, res) {
 
 
         //se tiene la primera respuesta de codigos de SMS vamos por lode de VOZ
+        //body: "targetContext=http://10.63.11.173:8080/BAZDigitalVoiceServices/webresources/getLogs" + "&pa_FchInicio=" + datos.pa_FchInicio + "&pa_FchFin=" + datos.pa_FchFin
         request.post({
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
             url: "http://10.51.145.97:8080/Kloud/webresources/superPoweredRequest",
-            body: "targetContext=http://10.63.11.173:8080/BAZDigitalVoiceServices/webresources/getLogs" + "&pa_FchInicio=" + datos.pa_FchInicio + "&pa_FchFin=" + datos.pa_FchFin
+            body: "targetContext=http://10.63.11.173:8080/BAZDigitalVoiceServices/webresources/GetInfoByFilter" +"&fchInicio=" + datos.pa_FchInicio + "&fchFin=" + datos.pa_FchFin + "&filtro=numero" + "&valorFiltro="+datos.destinatario+"&pagina=1"
         }, function (error, response, body) {
             console.log("body response monitor VOZ");
-            //console.log(body);
+            console.log(body);
 
             var codigos = [];
             var _body = [];

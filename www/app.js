@@ -10,7 +10,7 @@ app.controller('myCtrl', function ($scope, $interval, $window) {
             console.log('reinicio de la pagina');
             $window.location.reload();
           });
-        }, 300000); 
+        }, 60000); 
       }
 
 
